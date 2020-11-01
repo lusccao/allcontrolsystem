@@ -22,5 +22,4 @@ public class MaquinaService {
 	public Maquina carregar(int id){
 		return dao.carregar(id);
 	}
-
 }
