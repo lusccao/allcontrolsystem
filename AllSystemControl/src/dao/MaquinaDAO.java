@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class MaquinaDAO {
 	
 	public int criar(Maquina maquina) {
-		String sqlInsert = "INSERT INTO Endereco(idusuario,tipodeendereco, cep, endereco, estado, cidade, numero, complemento) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
+		String sqlInsert = "INSERT INTO maquinas(idMaquinas,hostname, SO, descricao) VALUES (?, ?, ?, ?)";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlInsert);) {
 			
@@ -36,7 +36,7 @@ public class MaquinaDAO {
 	
 
 	public void atualizar(Maquina maquina) {
-		String sqlUpdate = "UPDATE Endereco SET idusuario = ?,tipodeendereco=?, cep=?, endereco=?, estado=?, cidade=?, numero=?, complemento=? WHERE id=?";
+		String sqlUpdate = "UPDATE maquinas SET idMaquinas = ?, hostname=?, SO=?, descricao=? WHERE idMaquinas=?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
 			stm.setInt(1, maquina.getIdMaquinas());
@@ -50,7 +50,7 @@ public class MaquinaDAO {
 	}
 	
 	public void excluir(int id) {
-		String sqlDelete = "DELETE FROM Endereco WHERE id = ?";
+		String sqlDelete = "DELETE FROM maquinas WHERE idMaquina = ?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlDelete);) {
 			stm.setInt(1, id);
@@ -63,13 +63,13 @@ public class MaquinaDAO {
 	public Maquina carregar(int id) {
 		Maquina maquina = new Maquina();
 		maquina.setIdMaquinas(id);
-		String sqlSelect = "SELECT idusuario,tipodeendereco, cep, endereco, estado, cidade, numero, complemento FROM Endereco WHERE Endereco.id = ?";
+		String sqlSelect = "SELECT idMaquinas , hostname , SO , descricao FROM maquinas WHERE maquinas.idMaquinas = ?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			stm.setInt(1, maquina.getIdMaquinas());
 			try (ResultSet rs = stm.executeQuery();) {
 				if (rs.next()) {
-					maquina.setIdMaquinas(rs.getInt("idMaquina"));
+					maquina.setIdMaquinas(rs.getInt("idMaquinas"));
 					maquina.setHostname(rs.getString("hostname"));
 					maquina.setSO(rs.getString("SO"));
 					maquina.setDescricao(rs.getString("descricao"));

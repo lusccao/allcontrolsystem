@@ -12,7 +12,7 @@ import model.Maquina;
 public class InformacoesDAO {
 	
 	public int criar(Informacoes informacoes) {
-		String sqlInsert = "INSERT INTO Endereco(idusuario,tipodeendereco, cep, endereco, estado, cidade, numero, complemento) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
+		String sqlInsert = "INSERT INTO informacoes(idInformacoes, idMaquina , CPU , HDTotal , HDUtilizado , HDDisponivel , RamTotal, RamUtilizada , RamDisponivel , Data) VALUES (? , ? , ?, ? , ? , ? , ? , ? , ? )";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlInsert);) {
 			
@@ -45,7 +45,7 @@ public class InformacoesDAO {
 	}
 	
 	public void atualizar(Informacoes informacoes) {
-		String sqlUpdate = "UPDATE Endereco SET idusuario = ?,tipodeendereco=?, cep=?, endereco=?, estado=?, cidade=?, numero=?, complemento=? WHERE id=?";
+		String sqlUpdate = "UPDATE informacoes SET idInformacoes = ?, idMaquina = ?, CPU = ? , HDTotal = ? , HDUtilizado = ? , HDDisponivel = ? , RamTotal = ? , RamUtilizada = ? , RamDisponivel = ? , Data = ? WHERE id=?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
 			
@@ -67,7 +67,7 @@ public class InformacoesDAO {
 	}
 	
 	public void excluir(int id) {
-		String sqlDelete = "DELETE FROM Endereco WHERE id = ?";
+		String sqlDelete = "DELETE FROM informacoes WHERE idInformacoes = ?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlDelete);) {
 			stm.setInt(1, id);
@@ -80,7 +80,7 @@ public class InformacoesDAO {
 	public Informacoes carregar(int id) {
 		Informacoes informacoes = new Informacoes();
 		informacoes.setIdInformacoes(id);
-		String sqlSelect = "SELECT idusuario,tipodeendereco, cep, endereco, estado, cidade, numero, complemento FROM Endereco WHERE Endereco.id = ?";
+		String sqlSelect = "SELECT idInformacoes, idMaquina , CPU , HDTotal , HDUtilizado , HDDisponivel , RamTotal, RamUtilizada , RamDisponivel , Data FROM informacoes WHERE informacoes.idInformacoes = ?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			stm.setInt(1, informacoes.getIdInformacoes());

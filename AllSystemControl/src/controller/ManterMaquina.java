@@ -42,7 +42,7 @@ public class ManterMaquina extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");		
-		String mAcao = request.getParameter("acao");
+		
 		String mIdMaquinas = request.getParameter("idMaquinas");
 		String mHostname = request.getParameter("hostname");
 		String mSO = request.getParameter("SO");
@@ -51,59 +51,30 @@ public class ManterMaquina extends HttpServlet {
 		int idMaquinas = -1;
 		try {
 			idMaquinas = Integer.parseInt(mIdMaquinas);
-		} catch (NumberFormatException e) {
 			
-		}
+		} catch (NumberFormatException e) {
+
+		}		
+		
 		
 		Maquina maquina = new Maquina();
 		maquina.setIdMaquinas(idMaquinas);
-		MaquinaService ms = new MaquinaService();
-		RequestDispatcher view = null;
-		HttpSession session = request.getSession();
+		maquina.setHostname(mHostname);
+		maquina.setSO(mSO);
+		maquina.setDescricao(mDescricao);
 		
-		if (mAcao.equals("Criar")) {
-			ms.criar(maquina);
-			ArrayList<Maquina> lista = new ArrayList<>();
-			
-			lista.add(maquina);
-			session.setAttribute("lista", lista);
-			view = request.getRequestDispatcher("ListarPaises.jsp");
-		} else if (mAcao.equals("Excluir")) {
-			ms.excluir(maquina.getIdMaquinas());
-			ArrayList<Maquina> lista = (ArrayList<Maquina>)session.getAttribute("lista");
-			lista.remove(busca(maquina, lista));
-			session.setAttribute("lista", lista);
-			view = request.getRequestDispatcher("ListarPaises.jsp");
-		} else if (mAcao.equals("Alterar")) {
-			ms.atualizar(maquina);
-			ArrayList<Maquina> lista = (ArrayList<Maquina>) session.getAttribute("lista");
-			int pos = busca(maquina, lista);
-			lista.remove(pos);
-			lista.add(pos, maquina);
-			session.setAttribute("lista", lista);
-			request.setAttribute("pais", maquina);
-			view = request.getRequestDispatcher("VisualizarMaquina.jsp");
-		} else if (mAcao.equals("Visualizar")) {
-			maquina = ms.carregar(maquina.getIdMaquinas());
-			request.setAttribute("maquina", maquina);
-			view = request.getRequestDispatcher("VisualizarMaquina.jsp");
-		} else if (mAcao.equals("Editar")) {
-			maquina = ms.carregar(maquina.getIdMaquinas());
-			request.setAttribute("maquina", maquina);
-			view = request.getRequestDispatcher("AlterarMaquina.jsp");
-		}
+		
+		MaquinaService ms = new MaquinaService();
+		ms.criar(maquina);
+		maquina = ms.carregar();
+		
+		request.setAttribute("Maquina", maquina);
+		
+		RequestDispatcher view = request.getRequestDispatcher("Visualizar.jsp");		
+		
 		view.forward(request, response);
 	}
 	
-	public int busca(Maquina maquina, ArrayList<Maquina> lista) {
-		Maquina to;
-		for (int i = 0; i < lista.size(); i++) {
-			to = lista.get(i);
-			if (to.getIdMaquinas() == maquina.getIdMaquinas()) {
-				return i;
-			}
-		}
-		return -1;
-	}
+	
 
 }
