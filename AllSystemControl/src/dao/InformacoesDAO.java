@@ -77,13 +77,11 @@ public class InformacoesDAO {
 		}
 	}
 	
-	public Informacoes carregar(int id) {
+	public Informacoes carregar() {
 		Informacoes informacoes = new Informacoes();
-		informacoes.setIdInformacoes(id);
-		String sqlSelect = "SELECT idInformacoes, idMaquina , CPU , HDTotal , HDUtilizado , HDDisponivel , RamTotal, RamUtilizada , RamDisponivel , Data FROM informacoes WHERE informacoes.idInformacoes = ?";
+		String sqlSelect = "SELECT * FROM informacoes order by idInformacoes desc limit 1";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
-			stm.setInt(1, informacoes.getIdInformacoes());
 			try (ResultSet rs = stm.executeQuery();) {
 				if (rs.next()) {
 					

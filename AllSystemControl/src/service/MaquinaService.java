@@ -1,6 +1,8 @@
 package service;
 
 
+import java.sql.SQLException;
+
 import dao.MaquinaDAO;
 import model.Maquina;
 
@@ -19,7 +21,7 @@ public class MaquinaService {
 		dao.excluir(id);
 	}
 	
-	public Maquina carregar(int id){
-		return dao.carregar(id);
+	public Maquina carregar() {
+		return dao.carregar();
 	}
 }

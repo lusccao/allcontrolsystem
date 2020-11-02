@@ -18,8 +18,8 @@ public class InformacoesService {
 		dao.excluir(id);
 	}
 	
-	public Informacoes carregar(int id){
-		return dao.carregar(id);
+	public Informacoes carregar(){
+		return dao.carregar();
 	}
 
 }

@@ -60,13 +60,11 @@ public class MaquinaDAO {
 		}
 	}
 
-	public Maquina carregar(int id) {
+	public Maquina carregar() {
 		Maquina maquina = new Maquina();
-		maquina.setIdMaquinas(id);
-		String sqlSelect = "SELECT idMaquinas , hostname , SO , descricao FROM maquinas WHERE maquinas.idMaquinas = ?";
+		String sqlSelect = "select * from maquinas order by idMaquinas desc limit 1 ";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
-			stm.setInt(1, maquina.getIdMaquinas());
 			try (ResultSet rs = stm.executeQuery();) {
 				if (rs.next()) {
 					maquina.setIdMaquinas(rs.getInt("idMaquinas"));
