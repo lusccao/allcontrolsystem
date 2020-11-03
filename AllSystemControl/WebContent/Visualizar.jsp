@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="model.Maquina" %>
+<%@page import="model.Informacoes" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -13,11 +14,28 @@
 
 <body>
     <h3>O seu cliente acaba de ser cadastrado</h3>
-	<%Maquina maquina = (Maquina)request.getAttribute("Maquina"); %>
-	Id Maquina: <%=maquina.getIdMaquinas() %><br>
+	<%Maquina maquina = (Maquina) request.getAttribute("maquina"); %>
+	
+	Id Maquina <%=maquina.getIdMaquinas() %><br>
 	Hostname: <%=maquina.getHostname() %><br>
-	SO: <%=maquina.getSO() %><br>
-	Descrição: <%=maquina.getDescricao() %><br>
+	Sistema operacional: <%=maquina.getSO() %><br>
+	Descricao: <%=maquina.getDescricao() %><br>
+	
+	<%Informacoes informacoes = (Informacoes) request.getAttribute("informacoes"); %>
+	
+	Id Informações: <%=informacoes.getIdInformacoes() %><br>
+	Id Maquina: <%=informacoes.getIdMaquina() %><br>
+	CPU: <%=informacoes.getCPU() %><br>
+	HD Total: <%=informacoes.getHDTotal() %><br>
+	HD Disponivel: <%=informacoes.getHDDisponivel() %><br>
+	HD Utilizado:  <%=informacoes.getHDUtilizado() %><br>
+	Ram Total: <%=informacoes.getRamTotal() %><br>
+	Ram Utilizado: <%=informacoes.getRamUtilizada() %><br>
+	Ram Disponivel: <%=informacoes.getRamDisponivel() %><br>
+	Data: <%=informacoes.getData() %><br>
+	
+	
+
 </body>
 
 </html>

@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Informacoes;
+import service.InformacoesService;
+
 
 /**
  * Servlet implementation class ManterInformacoes
@@ -47,20 +50,98 @@ public class ManterInformacoes extends HttpServlet {
 		String mHDDisponivel = request.getParameter("HDDisponivel");
 		String mRamTotal = request.getParameter("RamTotal");
 		String mRamUtilizada = request.getParameter("RamUtilizada");
-		String mRamDiponivel = request.getParameter("RamDiponivel");
-		String mData = request.getParameter("Data");		
+		String mRamDisponivel = request.getParameter("RamDiponivel");
+		String mData = request.getParameter("Data");
 		
-		//Informacoes informacoes = new Informacoes();
+		int idInformacoes = 0;
+		try {
+			idInformacoes = Integer.parseInt(mIdInformacoes);
+			
+		} catch (NumberFormatException e) {
+
+		}
 		
-		//informacoes.set
-		//maquina.setHostname(mHostname);
-		//maquina.setSO(mSO);
-		//maquina.setDescricao(mDescricao);
-		//MaquinaService ms = new MaquinaService();
-		//ms.criar(maquina);
-		//maquina = ms.carregar(maquina.getIdMaquinas());
+		int idMaquina = 0;
+		try {
+			idMaquina = Integer.parseInt(mIdMaquina);
+			
+		} catch (NumberFormatException e) {
+
+		}
 		
-		//request.setAttribute("maquina", maquina);
+		double CPU = 0;
+		try {
+			CPU = Double.parseDouble(mCPU);
+			
+		} catch (NumberFormatException e) {
+
+		}
+		
+		double HDTotal = 0;
+		try {
+			HDTotal = Double.parseDouble(mHDTotal);
+			
+		} catch (NumberFormatException e) {
+
+		}
+		
+		double HDDisponivel = 0;
+		try {
+			HDDisponivel = Double.parseDouble(mHDDisponivel);
+			
+		} catch (NumberFormatException e) {
+
+		}
+		
+		double HDUtilizado = 0;
+		try {
+			HDUtilizado = Double.parseDouble(mHDUtilizado);
+			
+		} catch (NumberFormatException e) {
+
+		}
+		
+		double RamTotal = 0;
+		try {
+			RamTotal = Double.parseDouble(mRamTotal);
+			
+		} catch (NumberFormatException e) {
+
+		}
+		
+		double RamDisponivel = 0;
+		try {
+			RamDisponivel = Double.parseDouble(mRamDisponivel);
+			
+		} catch (NumberFormatException e) {
+
+		}
+		
+		double RamUtilizada = 0;
+		try {
+			RamUtilizada = Double.parseDouble(mRamUtilizada);
+			
+		} catch (NumberFormatException e) {
+
+		}
+		
+		Informacoes informacoes = new Informacoes();
+		
+		informacoes.setIdInformacoes(idInformacoes);
+		informacoes.setIdMaquina(idMaquina);
+		informacoes.setCPU(CPU);
+		informacoes.setHDTotal(HDTotal);
+		informacoes.setHDDisponivel(HDDisponivel);
+		informacoes.setHDUtilizado(HDUtilizado);
+		informacoes.setRamTotal(RamTotal);
+		informacoes.setRamDisponivel(RamDisponivel);
+		informacoes.setRamUtilizada(RamUtilizada);
+		
+		
+		InformacoesService is = new InformacoesService();
+		informacoes = is.carregar();
+		
+		request.setAttribute("informacoes", informacoes);		
 		
 		RequestDispatcher view = request.getRequestDispatcher("Visualizar.jsp");
 		
