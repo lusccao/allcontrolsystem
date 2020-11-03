@@ -86,4 +86,31 @@ public class MaquinaDAO {
 		}
 		return maquina;
 	}
+	
+	public Maquina carregarUmPorUm() {
+		Maquina maquina = new Maquina();
+		String sqlSelect = "select * from maquinas Where maquinas.id = ? ";
+		try (Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
+			try (ResultSet rs = stm.executeQuery();) {
+				if (rs.next()) {
+					maquina.setIdMaquinas(rs.getInt("idMaquinas"));
+					maquina.setHostname(rs.getString("hostname"));
+					maquina.setSO(rs.getString("SO"));
+					maquina.setDescricao(rs.getString("descricao"));
+					
+				} else {
+					maquina.setIdMaquinas(-1);
+					maquina.setHostname(null);
+					maquina.setSO(null);
+					maquina.setDescricao(null);					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e1) {
+			System.out.print(e1.getStackTrace());
+		}
+		return maquina;
+	}
 }

@@ -116,5 +116,45 @@ public class InformacoesDAO {
 		}
 		return informacoes;
 	}
+	
+	public Informacoes carregarUmPorUm() {
+		Informacoes informacoes = new Informacoes();
+		String sqlSelect = "SELECT * FROM informacoes WHERE informacoes.idInformacoes = ?";
+		try (Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
+			try (ResultSet rs = stm.executeQuery();) {
+				if (rs.next()) {
+					
+					informacoes.setIdInformacoes(rs.getInt("idInformacoes"));
+					informacoes.setIdMaquina(rs.getInt("idMaquina"));
+					informacoes.setCPU(rs.getDouble("CPU"));
+					informacoes.setHDTotal(rs.getDouble("HDTotal"));
+					informacoes.setHDUtilizado(rs.getDouble("HDUtilizado"));
+					informacoes.setHDDisponivel(rs.getDouble("HDDisponivel"));
+					informacoes.setRamTotal(rs.getDouble("RamTotal"));
+					informacoes.setRamUtilizada(rs.getDouble("RamUtilizada"));
+					informacoes.setRamDisponivel(rs.getDouble("RamDisponivel"));
+					informacoes.setData(rs.getDate("Data"));
+					
+				} else {
+					informacoes.setIdInformacoes(-1);
+					informacoes.setIdMaquina(-1);
+					informacoes.setCPU(-1);
+					informacoes.setHDTotal(-1);
+					informacoes.setHDUtilizado(-1);
+					informacoes.setHDDisponivel(-1);
+					informacoes.setRamTotal(-1);
+					informacoes.setRamUtilizada(-1);
+					informacoes.setRamDisponivel(-1);
+					informacoes.setData(null);			
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e1) {
+			System.out.print(e1.getStackTrace());
+		}
+		return informacoes;
+	}
 
 }
